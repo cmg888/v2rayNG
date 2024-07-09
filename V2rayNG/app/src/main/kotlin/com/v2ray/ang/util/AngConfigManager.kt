@@ -387,9 +387,9 @@ object AngConfigManager {
 //    }
 
     fun importBatchConfig(server: String?, subid: String, append: Boolean): Int {
-        var count = parseBatchConfig(server, subid, append)
+        var count = parseBatchConfig(Utils.decode(server), subid, append)
         if (count <= 0) {
-            count = parseBatchConfig(Utils.decode(server), subid, append)
+            count = parseBatchConfig(server, subid, append)
         }
         if (count <= 0) {
             count = parseCustomConfigServer(server, subid)
@@ -560,7 +560,7 @@ object AngConfigManager {
                         settingsStorage?.decodeString(AppConfig.PREF_HTTP_PORT),
                         AppConfig.PORT_HTTP.toInt()
                     )
-                    Utils.getUrlContentWithCustomUserAgent(url, httpPort)
+                    Utils.getUrlContentWithCustomUserAgent(url, 30000, httpPort)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     ""
@@ -577,9 +577,9 @@ object AngConfigManager {
     }
 
     private fun parseConfigViaSub(server: String?, subid: String, append: Boolean): Int {
-        var count = parseBatchConfig(server, subid, append)
+        var count = parseBatchConfig(Utils.decode(server), subid, append)
         if (count <= 0) {
-            count = parseBatchConfig(Utils.decode(server), subid, append)
+            count = parseBatchConfig(server, subid, append)
         }
         if (count <= 0) {
             count = parseCustomConfigServer(server, subid)
